@@ -55,10 +55,11 @@ if (typeof $request !== "undefined") {
   // get location from request url
   const url = $request.url;
   const res =
-    url.match(/weather\/.*?\/(.*)\/(.*)\?/) ||
-    url.match(/geocode\/([0-9.]*)\/([0-9.]*)\//) ||
-    url.match(/geocode=([0-9.]*),([0-9.]*)/) ||
-    url.match(/v2\/availability\/([0-9.]*)\/([0-9.]*)\//);
+   url.match(/\/api\/v2\/weather\/[^/]+\/(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\?|$)/) ||
+  url.match(/weather\/.*?\/(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\?|$)/) ||
+  url.match(/geocode\/(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)\//) ||
+  url.match(/geocode=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?) /) ||
+  url.match(/v2\/availability\/(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)\//);
   if (res === null) {
     $.info(`❌ 正则表达式匹配错误，🥬 无法从URL: ${url} 获取位置。`);
     $.done({ body: $request.body });
